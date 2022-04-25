@@ -44,12 +44,17 @@ public class Courier implements Delayed {
     public void deliveryOrder(Order order) {
         log.info("Courier: (id - {}) starts to delivery the order(id - {}).", id, order.getId());
 
+        // deliver the order
         orderService.deliveryOrder(order);
 
+        // The courier comes back for a rest after the delivery
         courierService.rest(this);
 
+        // cumulate the wait time
         statisticsService.cumulateFoodWaitTime(order);
         statisticsService.cumulateCourierWaitTime(this);
+
+        // print the statistics
         statisticsService.printStatistics();
     }
 

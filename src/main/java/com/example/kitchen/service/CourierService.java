@@ -8,9 +8,9 @@ public interface CourierService {
      * Dispatch the order to an idle courier
      *
      * @param order the received order
-     * @return the courier id, or -1 if none
+     * @return the courier, or null if none
      */
-    int dispatchOrder(Order order);
+    Courier dispatchOrder(Order order);
 
     /**
      * When the courier finishes the delivery, he/she comes back into the idle queues

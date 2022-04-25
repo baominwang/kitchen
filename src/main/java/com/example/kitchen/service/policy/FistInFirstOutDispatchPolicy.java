@@ -3,11 +3,13 @@ package com.example.kitchen.service.policy;
 import com.example.kitchen.service.DispatchPolicy;
 import com.example.kitchen.service.model.Courier;
 import com.example.kitchen.service.model.Order;
+import org.springframework.stereotype.Component;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
+@Component("firstInFirstOut")
 public class FistInFirstOutDispatchPolicy implements DispatchPolicy {
     private final List<Courier> waitingCouriers = new LinkedList<>();
 

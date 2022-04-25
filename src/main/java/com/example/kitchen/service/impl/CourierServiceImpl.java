@@ -47,6 +47,7 @@ public class CourierServiceImpl implements CourierService {
 
     @PostConstruct
     public void init() {
+        // employ the specified number of courier and put them into idle queues.
         final ReentrantLock lock = this.idleCouriersLock;
         lock.lock();
         try {
@@ -63,18 +64,19 @@ public class CourierServiceImpl implements CourierService {
             lock.unlock();
         }
 
+        // ask the courier monitor to start to work
         courierMonitor.submit(new CourierMonitor(kitchenService, onTheWayCouriers));
     }
 
     @Override
-    public int dispatchOrder(Order order) {
+    public Courier dispatchOrder(Order order) {
+        Courier courier;
         final ReentrantLock lock = this.idleCouriersLock;
         lock.lock();
-        Courier courier;
         try {
             if (idleCouriers.size() == 0) {
                 log.warn("Courier Service: There is no idle courier");
-                return -1;
+                return null;
             }
 
             // choose the first courier
@@ -91,7 +93,7 @@ public class CourierServiceImpl implements CourierService {
         log.info("Courier Service: Courier(id - {}) accepts the Order(id - {}). He will arrive the kitchen {} seconds later.",
                 courier.getId(), order.getId(), delay);
 
-        return courier.getId();
+        return courier;
     }
 
     @Override

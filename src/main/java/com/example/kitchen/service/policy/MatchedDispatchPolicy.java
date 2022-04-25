@@ -3,10 +3,12 @@ package com.example.kitchen.service.policy;
 import com.example.kitchen.service.DispatchPolicy;
 import com.example.kitchen.service.model.Courier;
 import com.example.kitchen.service.model.Order;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Component("matched")
 public class MatchedDispatchPolicy implements DispatchPolicy {
     private Map<Integer, Courier> waitingCouriers = new ConcurrentHashMap<>();
 

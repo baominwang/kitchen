@@ -5,6 +5,7 @@ import com.example.kitchen.exception.ErrorCode;
 import com.example.kitchen.service.CourierService;
 import com.example.kitchen.service.KitchenService;
 import com.example.kitchen.service.OrderService;
+import com.example.kitchen.service.model.Courier;
 import com.example.kitchen.service.model.Order;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,12 +40,12 @@ public class OrderServiceImpl implements OrderService {
         }
 
         // dispatch the order to the courier
-        int courierId = courierService.dispatchOrder(order);
-        if (courierId == -1) {
+        Courier courier = courierService.dispatchOrder(order);
+        if (courier == null) {
             log.warn("Order Service: There is no idle courier for Order(id - {}). The order is rejected", order.getId());
             throw new BaseException(ErrorCode.NoIdleCourier);
         }
-        order.setCourierId(courierId);
+        order.setCourierId(courier.getId());
 
         // send the order to the kitchen
         kitchenService.prepareOrder(order);
