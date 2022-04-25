@@ -1,0 +1,12 @@
+spring:
+  main:
+   allow-circular-references: true
+
+orderService:
+  maxNumberOfOngoingOrders: 100
+
+courierService:
+  numberOfCouriers: 100
+
+kitchenService:
+  dispatchPolicy: firstInFirstOut
