@@ -15,6 +15,10 @@ public class StatisticsController {
     @Autowired
     private StatisticsService statisticsService;
 
+    /**
+     * Trigger the statistics service to print the result.
+     *
+     */
     @PostMapping("action/print")
     public void receiveOrder() {
         statisticsService.printStatistics();

@@ -26,7 +26,6 @@ public class OrderController {
      *
      * @param orderDto the received order
      */
-
     @PostMapping
     public void receiveOrder(@RequestBody @Valid OrderDTO orderDto) {
         log.info("Kitchen system: Receive an order: (id - {}, name - {}, prepTime - {}).", orderDto.getId(), orderDto.getName(), orderDto.getPrepTime());
