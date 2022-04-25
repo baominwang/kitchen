@@ -55,7 +55,16 @@ public class Courier implements Delayed {
         statisticsService.cumulateCourierWaitTime(this);
 
         // print the statistics
-        statisticsService.printStatistics();
+        printStatistics(order);
+    }
+
+    private void printStatistics(Order order) {
+        log.info("********************* Single Statistics Start *********************");
+        log.info("Order Id: {}", order.getId());
+        log.info("Courier Id: {}", this.getId());
+        log.info("FoodWaitTime = " + (order.getPickupTime() - order.getReadyTime()) + "(seconds)");
+        log.info("CourierWaitTime = " + (this.getPickupTime() - this.getArrivalTime()) + "(seconds)");
+        log.info("*********************  Single Statistics End  *********************");
     }
 
     @Override

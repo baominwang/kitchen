@@ -73,9 +73,9 @@ public class StatisticsServiceImpl implements StatisticsService {
             courierWaitLock.unlock();
         }
 
-        log.info("********************* Statistics Result *********************");
+        log.info("********************* Total Statistics Start *********************");
         log.info("averageFoodWaitTime = " + averageFoodWaitTime + "(seconds)");
         log.info("averageCourierWaitTime = " + averageCourierWaitTime + "(seconds)");
-        log.info("********************* Statistics Result *********************");
+        log.info("*********************  Total Statistics End  *********************");
     }
 }

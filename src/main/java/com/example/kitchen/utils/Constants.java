@@ -4,4 +4,5 @@ public interface Constants {
     String API_ENDPOINT_BASE = "kitchen/v1/";
 
     String API_ENDPOINT_ORDER = API_ENDPOINT_BASE + "orders";
+    String API_ENDPOINT_STATS = API_ENDPOINT_BASE + "statistics";
 }
