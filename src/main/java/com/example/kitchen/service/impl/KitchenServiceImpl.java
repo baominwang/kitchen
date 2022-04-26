@@ -52,6 +52,9 @@ public class KitchenServiceImpl implements KitchenService {
         log.info("Kitchen Service: Order(id - {}) is preparing.", order.getId());
     }
 
+    // ********************* Notice *********************
+    // In standard strategy design pattern, the Strategy instance is passed into method as parameter.
+    // Now currentDispatchPolicy is part of KitchenService. We don't need to pass it as the parameter.
     @Override
     public void arriveKitchen(Courier courier) {
         log.info("Kitchen Service: Courier(id - {}) arrives the kitchen.", courier.getId());

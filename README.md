@@ -1,5 +1,12 @@
 ## 1. How to run the kitchen service
+### 1.1 How to change the dispatch policy
+The configuration of the dispatch policy is "kitchenService.dispatchPolicy" defined in test/resources/application.yml. There are two possible values:
+* matched: a courier is dispatched for a specific order and may only pick up that order.
+* firstInFirstOut: a courier picks up the next available order upon arrival. If there are multiple orders available, pick up an arbitrary order. If there are no available orders, couriers wait for the next available one. When there are multiple couriers waiting, the next available order is assigned to the earliest arrived courier.
 
+### 1.2 How to run
+* cd /kitchen
+* mvn test
 
 ## 2. Design Considerations
 ### 2.1 Key design consideration
