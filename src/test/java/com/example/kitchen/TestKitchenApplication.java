@@ -57,7 +57,7 @@ public class TestKitchenApplication extends AbstractTestNGSpringContextTests {
         long lastCourierArrivalTime = System.currentTimeMillis() / 1000 + 15;
 
         // calculate the last delivery time. Add 1 more second for time skew
-        long lastDeliveryTime = (lastCourierArrivalTime > lastOrderReadyTime) ? lastCourierArrivalTime : lastOrderReadyTime;
+        long lastDeliveryTime = Math.max(lastCourierArrivalTime, lastOrderReadyTime);
         lastDeliveryTime += 1;
 
         while (lastDeliveryTime > System.currentTimeMillis()/1000) {

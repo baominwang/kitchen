@@ -7,6 +7,7 @@ import com.example.kitchen.service.KitchenService;
 import com.example.kitchen.service.OrderService;
 import com.example.kitchen.service.model.Courier;
 import com.example.kitchen.service.model.Order;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,6 +17,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
+@Data
 @Slf4j
 public class OrderServiceImpl implements OrderService {
     @Value("${orderService.maxNumberOfOngoingOrders}")
@@ -27,7 +29,7 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private CourierService courierService;
 
-    private final Map<String, Order> ongoingOrders = new ConcurrentHashMap<>();
+    private Map<String, Order> ongoingOrders = new ConcurrentHashMap<>();
 
     // In real product, the delivered orders are persisted in database. Here we just
     // use Map to store it. We don't want to consider OutOfMemory issue here.
