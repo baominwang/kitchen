@@ -27,13 +27,19 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private CourierService courierService;
 
-    private final Map<String, Order> orders = new ConcurrentHashMap<>();
+    private final Map<String, Order> ongoingOrders = new ConcurrentHashMap<>();
+
+    // In real product, the delivered orders are persisted in database. Here we just
+    // use Map to store it. We don't want to consider OutOfMemory issue here.
+    private final Map<String, Order> deliveredOrders = new ConcurrentHashMap<>();
 
     @Override
     public void receiveOrder(Order order) {
+        log.info("Order Service: Receive an order: (id - {}, name - {}, prepTime - {}).", order.getId(), order.getName(), order.getPrepTime());
+
         // control the maximum ongoing orders. In concurrent situation, numberOfOngoingOrders could
         // exceed the threshold. This is not a big issue. For flow control, this design is accepted.
-        int numberOfOngoingOrders = orders.size();
+        int numberOfOngoingOrders = ongoingOrders.size();
         if (numberOfOngoingOrders >= maxNumberOfOngoingOrders) {
             log.warn("There are {} ongoing orders. Can't serve more orders", numberOfOngoingOrders);
             throw new BaseException(ErrorCode.ReachOrderLimit);
@@ -51,12 +57,18 @@ public class OrderServiceImpl implements OrderService {
         kitchenService.prepareOrder(order);
 
         // record the incoming order into the orders
-        orders.put(order.getId(), order);
+        ongoingOrders.put(order.getId(), order);
     }
 
     @Override
     public void deliveryOrder(Order order) {
-        orders.remove(order.getId());
+        ongoingOrders.remove(order.getId());
+        deliveredOrders.put(order.getId(), order);
         log.info("Order Service: Order(id - {}) is delivered.", order.getId());
+    }
+
+    @Override
+    public boolean isOrderDelivered(String orderId) {
+        return deliveredOrders.containsKey(orderId);
     }
 }

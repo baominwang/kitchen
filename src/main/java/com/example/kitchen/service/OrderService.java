@@ -18,4 +18,11 @@ public interface OrderService {
      * @param order the received order
      */
     void deliveryOrder(Order order);
+
+    /**
+     * Check whether the order is delivered
+     *
+     * @param orderId the order id
+     */
+    boolean isOrderDelivered(String orderId);
 }

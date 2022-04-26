@@ -72,10 +72,15 @@ public class StatisticsServiceImpl implements StatisticsService {
         } finally {
             courierWaitLock.unlock();
         }
+        String newLine = System.getProperty("line.separator");
 
-        log.info("********************* Total Statistics Start *********************");
-        log.info("averageFoodWaitTime = " + averageFoodWaitTime + "(seconds)");
-        log.info("averageCourierWaitTime = " + averageCourierWaitTime + "(seconds)");
-        log.info("*********************  Total Statistics End  *********************");
+        // build the statistics result to avoid the inter-leave issue
+        StringBuilder sb = new StringBuilder();
+        sb.append(newLine);
+        sb.append("********************* Total Statistics Start *********************");
+        sb.append("averageFoodWaitTime = " + averageFoodWaitTime + "(seconds)");
+        sb.append("averageCourierWaitTime = " + averageCourierWaitTime + "(seconds)");
+        sb.append("*********************  Total Statistics End  *********************");
+        log.info(sb.toString());
     }
 }

@@ -28,8 +28,6 @@ public class OrderController {
      */
     @PostMapping
     public void receiveOrder(@RequestBody @Valid OrderDTO orderDto) {
-        log.info("Kitchen system: Receive an order: (id - {}, name - {}, prepTime - {}).", orderDto.getId(), orderDto.getName(), orderDto.getPrepTime());
-
         Order order = OrderMapper.toOrder(orderDto);
         orderService.receiveOrder(order);
     }

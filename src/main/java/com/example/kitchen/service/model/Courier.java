@@ -59,12 +59,19 @@ public class Courier implements Delayed {
     }
 
     private void printStatistics(Order order) {
-        log.info("********************* Single Statistics Start *********************");
-        log.info("Order Id: {}", order.getId());
-        log.info("Courier Id: {}", this.getId());
-        log.info("FoodWaitTime = " + (order.getPickupTime() - order.getReadyTime()) + "(seconds)");
-        log.info("CourierWaitTime = " + (this.getPickupTime() - this.getArrivalTime()) + "(seconds)");
-        log.info("*********************  Single Statistics End  *********************");
+        String newLine = System.getProperty("line.separator");
+
+        // build the statistics result to avoid the inter-leave issue
+        StringBuilder sb = new StringBuilder();
+        sb.append(newLine);
+        sb.append("********************* Single Statistics Start *********************" + newLine);
+        sb.append("Order Id: " + order.getId() + newLine);
+        sb.append("Courier Id:" + this.getId() + newLine);
+        sb.append("FoodWaitTime = " + (order.getPickupTime() - order.getReadyTime()) + "(seconds)" + newLine);
+        sb.append("CourierWaitTime = " + (this.getPickupTime() - this.getArrivalTime()) + "(seconds)" + newLine);
+        sb.append("*********************  Single Statistics End  *********************");
+
+        log.info(sb.toString());
     }
 
     @Override
